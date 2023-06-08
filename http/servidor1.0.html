@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exemplo de formulário com fetch</title>
+</head>
+<body>
+  <h1>Exemplo de formulário com fetch</h1>
+  <form id="my-form">
+    <label for="name-input">Digite seu nome:</label>
+    <input type="text" id="name-input" name="name">
+    <button type="submit">Enviar</button>
+  </form>
+<ul id="ul">
+
+</ul>
+  <script type="text/javascript">
+  const form = document.getElementById('my-form');
+const input = document.getElementById('name-input');
+const ul = document.getElementById('ul');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const name = input.value.trim();
+ 
+  
+  if (!name) {
+    console.error('Nome inválido!');
+    return;
+  }
+  sendFormData(name);
+
+});
+
+function sendFormData(name) {
+  fetch('http://localhost:3030/hello', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ name: name }), 
+  
+  })
+ 
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao enviar dados!');
+      }
+      return response.json();
+    })
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+}
+
+fetch('http://localhost:3030/pega', {
+  method: 'GET',
+  headers: {'Content-Type': 'application/json'}
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Erro ao buscar dados!');
+    }
+    return response.json();
+  })
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </script>
+</body>
+</html>
